@@ -1,23 +1,22 @@
 //@ts-check
-
 import { canvas, ctx } from "./common/canvas.js";
-import { Player } from "./player.js";
+import { GameManager } from "./common/game-manager.js";
 
-let player = new Player();
+let game = new GameManager();
+game.initalize();
 
-let lastTimeStamp = 0;
+let lastTimestamp = 0;
 
-function gameLoop(timeStamp) {
-    let elapsedTime = lastTimeStamp - timeStamp;
-    lastTimeStamp = timeStamp;
+function gameLoop(timestamp) {
+	let elapsedTime = timestamp - lastTimestamp;
+	lastTimestamp = timestamp;
 
-    ctx.clearRect(0,0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    player.update();
-    player.draw();
+    game.update(elapsedTime);
+    game.draw();
 
-    window.requestAnimationFrame(gameLoop);
-
+	window.requestAnimationFrame(gameLoop);
 }
 
 window.requestAnimationFrame(gameLoop);
